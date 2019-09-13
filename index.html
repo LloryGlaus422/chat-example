@@ -1,6 +1,12 @@
 <!doctype html>
 <html>
   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    </head>
     <title>Socket.IO chat</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,9 +18,35 @@
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
       #messages { margin-bottom: 40px }
+
+      #heade{
+        background-color: mediumblue;
+        color:white;
+      }
     </style>
   </head>
   <body>
+      <div id='heade' class="jumbotron text-center">
+          <h1>Welcome to Messenger</h1>
+          <p>Find someone to chat now!</p>
+      </div>
+
+      <div>
+          
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">@</span>
+              </div>
+              <input type="text" class="form-control" placeholder="Username" id="usr" name="username">
+            </div> 
+            <button id = 'sub' type="submit" class="btn btn-primary">Submit</button> 
+      </div>
+
+      <div id = 'nickname'>
+        <table>
+        </table>
+      </div>
+      
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -22,13 +54,27 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+
       $(function () {
         var socket = io();
+
+
+
+
+
+
+        
         $('form').submit(function(){
           socket.emit('chat message', $('#m').val());
           $('#m').val('');
           return false;
         });
+
+
+
+
+
+
         socket.on('chat message', function(msg){
           $('#messages').append($('<li>').text(msg));
           window.scrollTo(0, document.body.scrollHeight);
